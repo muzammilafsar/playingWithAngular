@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js';
 import { ApiService } from './api.service';
 @Component({
   selector: 'app-root',
@@ -8,7 +7,7 @@ import { ApiService } from './api.service';
 })
 export class AppComponent implements OnInit {
   title = 'angularRevision';
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
   }
   ngOnInit() {
     this.api.getUserList();

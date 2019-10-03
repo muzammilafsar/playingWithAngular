@@ -9,7 +9,7 @@ import { ApiService } from '../api.service';
 export class UserTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'username', 'city', 'zipcode', 'company'];
   userList: Array<any> = [];
-  constructor(private api: ApiService) { }
+  constructor(public api: ApiService) { }
   selectUser(data) {
     console.log(data);
     this.api.selectedUser = data;

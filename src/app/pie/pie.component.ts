@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js';
 import { ApiService } from '../api.service';
 @Component({
@@ -6,14 +6,13 @@ import { ApiService } from '../api.service';
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.scss']
 })
-export class PieComponent implements OnChanges, OnDestroy {
-  @Input() pieData: Array<Number>;
-  constructor(private api:ApiService) { }
+export class PieComponent implements OnChanges {
+  @Input() pieData: Array<number>;
+  @ViewChild('myCanvas', {static: false}) myCanvas: ElementRef;
+  constructor(public api:ApiService) { }
 
   ngOnChanges() {
-    console.log(Object.values(this.api.pieChart), this.api.pieChart);
-    var ctx = document.getElementById("mychart").getContext('2d');
-    var myChart = new Chart(ctx, {
+    var myChart = new Chart(this.myCanvas.nativeElement, {
       type: 'pie',
       data: {
         labels: ["Latitude > 0", "Latitude < 0", "Longitude > 0", "Longitude < 0"],
