@@ -13,6 +13,7 @@ export class UserTableComponent implements OnInit {
   selectUser(data) {
     console.log(data);
     this.api.selectedUser = data;
+    this.api.getUserPercentage(data.company.name);
   }
   ngOnInit() {
   }

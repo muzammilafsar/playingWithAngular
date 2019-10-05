@@ -11,11 +11,14 @@ export class ApiService {
     username: "",
     email: ""
   }
+  percentage: number = 0;
+  loading: boolean = true;
   constructor(private http: HttpClient) { }
   getUserList() {
-    return this.http.get("https://jsonplaceholder.typicode.com/users").subscribe((val: Array<any>) => {
+    return this.http.get("http://localhost:5000/users").subscribe((val: Array<any>) => {
       this.userList = val;
       this.selectedUser = val[0];
+      this.getUserPercentage(this.selectedUser.company.name);
       let reduced = val.reduce((acc, val) => {
         let geo = {
           lat: parseFloat(val.address.geo.lat),
@@ -32,6 +35,15 @@ export class ApiService {
       }, [0, 0, 0, 0]);
       console.log(reduced);
       this.pieChart = reduced
+    })
+  }
+  getUserPercentage(company) {
+    this.loading = true;
+    this.http.get('http://localhost:5000/users/percentage/'+ company).subscribe((val: {percentage: number}) => {
+    this.loading = false;
+    this.percentage = val.percentage;
+    },(err) => {
+    this.loading = false;
     })
   }
 }
